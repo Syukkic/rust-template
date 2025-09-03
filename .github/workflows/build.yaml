@@ -48,4 +48,9 @@ jobs:
       - run: cargo fmt -- --check
       - run: cargo check --all
       - run: cargo clippy --all-targets --all-features --tests --benches -- -D warnings
-      - run: cargo nextest run --all-features
+      - run: |
+          if cargo nextest list | grep -q .; then
+            cargo nextest run --all-features
+          else
+            echo "No tests found, skipping."
+          fi
